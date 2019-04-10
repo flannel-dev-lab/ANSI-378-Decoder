@@ -1,4 +1,4 @@
-package ANSI_378_Decoder
+package ANSI378Decoder
 
 import (
 	"encoding/base64"
@@ -26,7 +26,6 @@ func TestGetFMDRecordHeaders_2ByteRecordLength(t *testing.T) {
 	if err != nil {
 		t.Errorf("%v", err)
 	}
-
 
 }
 

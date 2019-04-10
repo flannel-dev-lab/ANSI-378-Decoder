@@ -1,4 +1,4 @@
-package ANSI_378_Decoder
+package ANSI378Decoder
 
 import (
 	"encoding/binary"
@@ -12,7 +12,7 @@ import (
 // Returns a map where key is Finger View {view number} and value is a slice of map where first element of slice is header
 // and rest is minutiae data
 
-func GetViewRecords(fmdByteArray []byte, views uint8) (fingerViewRecords map[string][]interface{}, err error){
+func GetViewRecords(fmdByteArray []byte, views uint8) (fingerViewRecords map[string][]interface{}, err error) {
 	var view uint8
 
 	if len(fmdByteArray) == 0 {
@@ -21,7 +21,7 @@ func GetViewRecords(fmdByteArray []byte, views uint8) (fingerViewRecords map[str
 
 	fingerViewRecords = make(map[string][]interface{})
 
-	for view = 1; view <= views; view ++ {
+	for view = 1; view <= views; view++ {
 		fingerViewHeader := make(map[string]uint8)
 
 		fingerViewHeader["Finger Position"] = uint8(fmdByteArray[0])
@@ -35,9 +35,9 @@ func GetViewRecords(fmdByteArray []byte, views uint8) (fingerViewRecords map[str
 		fmdByteArray = fmdByteArray[4:]
 
 		var minutiaeCount uint
-		for minutiaeCount = 0; minutiaeCount < uint(fingerViewHeader["Minutiae Count"]); minutiaeCount ++ {
+		for minutiaeCount = 0; minutiaeCount < uint(fingerViewHeader["Minutiae Count"]); minutiaeCount++ {
 
-			minutiaeRecord := fmdByteArray[6 * minutiaeCount:  6 * (minutiaeCount + 1)]
+			minutiaeRecord := fmdByteArray[6*minutiaeCount : 6*(minutiaeCount+1)]
 
 			minutiaeData := make(map[string]interface{})
 			minutiaeData["Minutiae Type"] = binary.BigEndian.Uint16(minutiaeRecord[0:2]) >> 14
