@@ -5,6 +5,7 @@ import (
 	"errors"
 )
 
+// GetFMDRecordHeaders ...
 // Returns the record headers for the FMD
 // Format Identifier -> FMR
 // Version Number -> 20
