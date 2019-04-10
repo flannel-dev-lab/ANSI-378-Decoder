@@ -1,6 +1,12 @@
+# ANSI-378 Decoder
+
 Breaks down a ANSI INCITS 378-2004 Finger Minutiae Format
 
 ## Method Information
+
+Supports go versions > 1.12.1. To install add this line to your `go.mod` file 
+
+`github.com/yombu360/ANSI-378-Decoder`
 
 - **Get Record headers**
     ```
