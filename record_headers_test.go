@@ -1,4 +1,4 @@
-package ansi378
+package ansi378decoder
 
 import (
 	"encoding/base64"
@@ -20,7 +20,7 @@ var (
 		ImageSizeY:          392,
 		RecordLength:        302,
 		Reserved:            0,
-		VersionNumber:       " 20", // the space is important? I guess?
+		VersionNumber:       " 20",
 		Views:               1,
 	}
 
@@ -39,6 +39,7 @@ var recordHeaderTests = []struct {
 }
 
 func TestRecordHeaders(t *testing.T) {
+
 	for _, test := range recordHeaderTests {
 		res, err := RecordHeaders(test.fmd)
 		// if we only expect an error
