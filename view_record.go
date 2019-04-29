@@ -54,7 +54,6 @@ func ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error) {
 		}
 
 		fmd = fmd[4:]
-
 		var minutiaeCount uint
 
 		var minutiaes []Minutiae
@@ -63,6 +62,7 @@ func ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error) {
 			record := fmd[6*minutiaeCount : 6*(minutiaeCount+1)]
 
 			minutiae := Minutiae{
+
 				MinutiaeType: binary.BigEndian.Uint16(record[0:2]) >> 14,
 				CoordinateX:  binary.BigEndian.Uint16(record[0:2]) & 16383,
 				Reserved:     binary.BigEndian.Uint16(record[2:4]) >> 14,
