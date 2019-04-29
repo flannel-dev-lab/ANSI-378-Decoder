@@ -12,9 +12,9 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
 
 - **Get Record headers**
     ```
-    GetFMDRecordHeaders(fmdByteArray []byte) (recordHeaders map[string]interface{}, err error)
+    RecordHeaders(fmd []byte) (*RecordHeader, error)
     ```
-    Takes in a `fmdByteArray` which is an array of bytes and returns the `recordHeader`
+    Takes in a `fmd` byte array which is an array of bytes and returns the address of `RecordHeader`
     
     The following headers are returned
     ```
@@ -37,40 +37,9 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
     
 - **Get View Data**
     ```
-    GetViewRecords(fmdByteArray []byte, views uint8) (fingerViewRecords map[string][]interface{}, err error)
+    ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error)
     ```
-    Takes in a `fmdByteArray` which is an array of bytes and `views` (Can be obtained from record header) and returns a 
-    map of `fingerViewRecords`
+    Takes in a `fmd` byte array which is an array of bytes and `views` (Can be obtained from record header) and returns an 
+    array of `ViewRecords`
     
-    Sample Output:
-    ```
-    map[
-        Finger View 1:
-            [
-                map[
-                    Finger Position:0 
-                    Finger Quality:86 
-                    Impression Type:0 
-                    Minutiae Count:45 
-                    View Number:0
-                ] 
-                map[
-                    Angle:120 
-                    Minutiae Type:1 
-                    Quality:100 
-                    Reserved:0 
-                    X coordinate:80 
-                    Y coordinate:291
-                ]
-                :
-                :
-            ]
-        :
-        :
-        :
-        Finger View N:
-            :
-            :
-        
-    ```
 

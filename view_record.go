@@ -35,7 +35,7 @@ const (
 )
 
 // ViewRecords returns a slice of ViewRecords given an FMD
-func ViewRecords(fmd []byte, views uint8) (*[]ViewRecord, error) {
+func ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error) {
 	if len(fmd) < minimumFMDViewRecordLength {
 		return nil, ErrInvalidFMD
 	}
@@ -75,5 +75,5 @@ func ViewRecords(fmd []byte, views uint8) (*[]ViewRecord, error) {
 		viewRecord.Minutiaes = minutiaes
 		viewRecords = append(viewRecords, viewRecord)
 	}
-	return &viewRecords, nil
+	return viewRecords, nil
 }
