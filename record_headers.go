@@ -47,7 +47,6 @@ func RecordHeaders(fmd []byte) (*RecordHeader, error) {
 		h.ImageResolutionY = binary.BigEndian.Uint16(fmd[22:24])
 		h.Views = uint8(fmd[24])
 		h.Reserved = fmd[25]
-
 	} else { // The record size is 6 bytes
 		h.RecordLength = binary.BigEndian.Uint16(fmd[10:14])
 		h.CBEFFOwner = binary.BigEndian.Uint16(fmd[14:16])

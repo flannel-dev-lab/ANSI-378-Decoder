@@ -2,7 +2,6 @@ package ansi378
 
 import (
 	"encoding/binary"
-	"fmt"
 )
 
 // ViewRecords returns Minutiae data for each finger view.
@@ -58,9 +57,8 @@ func ViewRecords(fmd []byte, views uint8) (*[]ViewRecord, error) {
 		fmd = fmd[4:]
 		var minutiaes = []Minutiae{}
 		var i uint8
-		fmt.Println(len(fmd))
 		for i = 0; i < viewRecord.MinutiaeCount; i++ {
-			record := fmd[6*i : 6*(i+1)]
+			record := fmd[6*int(i) : 6*(int(i)+1)]
 			m := Minutiae{
 				MinutiaeType: binary.BigEndian.Uint16(record[0:2]) >> 14,
 				CoordinateX:  binary.BigEndian.Uint16(record[0:2]) & 16383,
