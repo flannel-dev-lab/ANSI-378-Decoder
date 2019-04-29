@@ -2,61 +2,64 @@ package ansi378
 
 import (
 	"encoding/binary"
-	"errors"
 )
 
-// GetFMDRecordHeaders ...
-// Returns the record headers for the FMD
-// Format Identifier -> FMR
-// Version Number -> 20
-// Record Length -> 2 bytes if len is 65535 or 6 bytes if  len is greater than 65535
-// CBEFF Owner	-> Vendor specific Owner codes (https://www.ibia.org/cbeff/iso/product-codes)
-// Equipment Compliance -> Specifies that device is compliant with FBI standard IAFIS Image Quality Specification, January 29, 1999 of CJIS-RS-0010
-// Equipment ID -> Vendor Specified ID, If 0, then contact vendor
-// Image Size (X)-> Size of image in X direction
-// Image Size (Y)-> Size of image in Y direction
-// Image Resolution (X) -> Image Resolution
-// Image Resolution (Y) -> Image Resolution
-// Views -> Number of finger Views
-// Reserved	-> Reserved for future use
-func GetFMDRecordHeaders(fmdByteArray []byte) (recordHeaders map[string]interface{}, err error) {
-	if len(fmdByteArray) <= 30 {
-		return recordHeaders, errors.New("fmd record size is too small")
+// RecordHeader is header data decoded from an FMD
+type RecordHeader struct {
+	FormatIdentifier    string
+	VersionNumber       string
+	RecordLength        uint16
+	CBEFFOwner          uint16
+	CBEFFType           uint16
+	EquipmentCompliance uint16
+	EquipmentID         uint16
+	ImageSizeX          uint16
+	ImageSizeY          uint16
+	ImageResolutionX    uint16
+	ImageResolutionY    uint16
+	Views               uint8
+	Reserved            byte
+}
+
+const (
+	minimumFMDHeaderLength = 30
+)
+
+// RecordHeaders returns the record headers of a given FMD
+func RecordHeaders(fmd []byte) (*RecordHeader, error) {
+	if len(fmd) <= minimumFMDHeaderLength {
+		return nil, ErrInvalidFMD
 	}
-
-	recordHeaders = make(map[string]interface{})
-
-	recordHeaders["Format Identifier"] = string(fmdByteArray[0:4])[0:3] // Last byte is null terminator
-	recordHeaders["Version Number"] = string(fmdByteArray[4:8])[0:3]    // Last byte is null terminator
-
-	// It means that the record size is 2 bytes
-	if fmdByteArray[8] != 0 {
-		recordHeaders["Record Length"] = binary.BigEndian.Uint16(fmdByteArray[8:10])
-		recordHeaders["CBEFF Owner"] = binary.BigEndian.Uint16(fmdByteArray[10:12])
-		recordHeaders["CBEFF Type"] = binary.BigEndian.Uint16(fmdByteArray[12:14])
-		recordHeaders["Equipment Compliance"] = binary.BigEndian.Uint16(fmdByteArray[14:16]) >> 12
-		recordHeaders["Equipment ID"] = binary.BigEndian.Uint16(fmdByteArray[14:16]) & 4095
-		recordHeaders["Image Size (X)"] = binary.BigEndian.Uint16(fmdByteArray[16:18])
-		recordHeaders["Image Size (Y)"] = binary.BigEndian.Uint16(fmdByteArray[18:20])
-		recordHeaders["Image Resolution (X)"] = binary.BigEndian.Uint16(fmdByteArray[20:22])
-		recordHeaders["Image Resolution (Y)"] = binary.BigEndian.Uint16(fmdByteArray[22:24])
-		recordHeaders["Views"] = uint8(fmdByteArray[24])
-		recordHeaders["Reserved"] = fmdByteArray[25]
-
-	} else { // It means that the record size is 6 bytes
-		recordHeaders["Record Length"] = binary.BigEndian.Uint32(fmdByteArray[10:14])
-		recordHeaders["CBEFF Owner"] = binary.BigEndian.Uint16(fmdByteArray[14:16])
-		recordHeaders["CBEFF Type"] = binary.BigEndian.Uint16(fmdByteArray[16:18])
-		recordHeaders["Equipment Compliance"] = binary.BigEndian.Uint16(fmdByteArray[18:20]) >> 12
-		recordHeaders["Equipment ID"] = binary.BigEndian.Uint16(fmdByteArray[18:20]) & 4095
-		recordHeaders["Image Size (X)"] = binary.BigEndian.Uint16(fmdByteArray[20:22])
-		recordHeaders["Image Size (Y)"] = binary.BigEndian.Uint16(fmdByteArray[22:24])
-		recordHeaders["Image Resolution (X)"] = binary.BigEndian.Uint16(fmdByteArray[24:26])
-		recordHeaders["Image Resolution (Y)"] = binary.BigEndian.Uint16(fmdByteArray[26:28])
-		recordHeaders["Views"] = uint8(fmdByteArray[28])
-		recordHeaders["Reserved"] = fmdByteArray[29]
-
+	h := RecordHeader{
+		FormatIdentifier: string(fmd[0:4])[0:3], // Last byte is null terminator
+		VersionNumber:    string(fmd[4:8])[0:3], // Last byte is null terminator
 	}
+	// If the record size is 2 bytes
+	if fmd[8] != 0 {
+		h.RecordLength = binary.BigEndian.Uint16(fmd[8:10])
+		h.CBEFFOwner = binary.BigEndian.Uint16(fmd[10:12])
+		h.CBEFFType = binary.BigEndian.Uint16(fmd[12:14])
+		h.EquipmentCompliance = binary.BigEndian.Uint16(fmd[14:16]) >> 12
+		h.EquipmentID = binary.BigEndian.Uint16(fmd[14:16]) & 4095
+		h.ImageSizeX = binary.BigEndian.Uint16(fmd[16:18])
+		h.ImageSizeY = binary.BigEndian.Uint16(fmd[18:20])
+		h.ImageResolutionX = binary.BigEndian.Uint16(fmd[20:22])
+		h.ImageResolutionY = binary.BigEndian.Uint16(fmd[22:24])
+		h.Views = uint8(fmd[24])
+		h.Reserved = fmd[25]
 
-	return recordHeaders, nil
+	} else { // The record size is 6 bytes
+		h.RecordLength = binary.BigEndian.Uint16(fmd[10:14])
+		h.CBEFFOwner = binary.BigEndian.Uint16(fmd[14:16])
+		h.CBEFFType = binary.BigEndian.Uint16(fmd[16:18])
+		h.EquipmentCompliance = binary.BigEndian.Uint16(fmd[18:20]) >> 12
+		h.EquipmentID = binary.BigEndian.Uint16(fmd[18:20]) & 4095
+		h.ImageSizeX = binary.BigEndian.Uint16(fmd[20:22])
+		h.ImageSizeY = binary.BigEndian.Uint16(fmd[22:26])
+		h.ImageResolutionX = binary.BigEndian.Uint16(fmd[24:26])
+		h.ImageResolutionY = binary.BigEndian.Uint16(fmd[26:28])
+		h.Views = uint8(fmd[28])
+		h.Reserved = fmd[29]
+	}
+	return &h, nil
 }
