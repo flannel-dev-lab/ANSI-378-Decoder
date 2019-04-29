@@ -1,55 +1,78 @@
-package ANSI378Decoder
+package ansi378
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 )
 
-// Returns the Minutiae data for each finger view
-// One Finger View Header per each finger view record. For example, 3 views will have 3  Finger View Headers
+// ViewRecords returns Minutiae data for each finger view.
+// TODO: determine what this means and clean up these docs
+// NOTE: I see no conditionals that operate on index length, index 26 or index 30.
+// One Finger View Header per each finger view record. For example, 3 views will have 3 Finger View Headers.
 // For efficiency, if the record length is < 65535 send fmdByteArray from index 26 to end else send from index 30 to end
-// Returns a map where key is Finger View {view number} and value is a slice of map where first element of slice is header
+// returns a map where key is Finger View {view number} and value is a slice of map where first element of slice is header
 // and rest is minutiae data
 
-func GetViewRecords(fmdByteArray []byte, views uint8) (fingerViewRecords map[string][]interface{}, err error) {
+// ViewRecord is data constructed from a FMD
+type ViewRecord struct {
+	FingerPosition uint8
+	ViewNumber     uint8
+	ImpressionType uint8
+	FingerQuality  uint8
+	MinutiaeCount  uint8
+	Minutiaes      []Minutiae
+}
+
+// Minutiae samples are included in each ViewRecord
+type Minutiae struct {
+	MinutiaeType uint16
+	CoordinateX  uint16
+	CoordinateY  uint16
+	Reserved     uint16
+	Angle        uint8
+	Quality      uint8
+}
+
+const (
+	//TODO: what is the actual minimum FMD length?
+	// if it's less than 5 bytes, then we know there isn't
+	// a minutiae record.
+	minimumFMDViewRecordLength = 5
+)
+
+// ViewRecords returns a slice of ViewRecords given an FMD
+func ViewRecords(fmd []byte, views uint8) (*[]ViewRecord, error) {
+	if len(fmd) < minimumFMDViewRecordLength {
+		return nil, ErrInvalidFMD
+	}
+	viewRecords := []ViewRecord{}
 	var view uint8
-
-	if len(fmdByteArray) == 0 {
-		return fingerViewRecords, errors.New("empty fmd byte array")
-	}
-
-	fingerViewRecords = make(map[string][]interface{})
-
 	for view = 1; view <= views; view++ {
-		fingerViewHeader := make(map[string]uint8)
-
-		fingerViewHeader["Finger Position"] = uint8(fmdByteArray[0])
-		fingerViewHeader["View Number"] = uint8(fmdByteArray[1]) >> 4
-		fingerViewHeader["Impression Type"] = uint8(fmdByteArray[1]) & 15
-		fingerViewHeader["Finger Quality"] = uint8(fmdByteArray[2])
-		fingerViewHeader["Minutiae Count"] = uint8(fmdByteArray[3])
-
-		fingerViewRecords[fmt.Sprintf("Finger View %d", view)] = append(fingerViewRecords[fmt.Sprintf("Finger View %d", view)], fingerViewHeader)
-
-		fmdByteArray = fmdByteArray[4:]
-
-		var minutiaeCount uint
-		for minutiaeCount = 0; minutiaeCount < uint(fingerViewHeader["Minutiae Count"]); minutiaeCount++ {
-
-			minutiaeRecord := fmdByteArray[6*minutiaeCount : 6*(minutiaeCount+1)]
-
-			minutiaeData := make(map[string]interface{})
-			minutiaeData["Minutiae Type"] = binary.BigEndian.Uint16(minutiaeRecord[0:2]) >> 14
-			minutiaeData["X coordinate"] = binary.BigEndian.Uint16(minutiaeRecord[0:2]) & 16383
-			minutiaeData["Reserved"] = binary.BigEndian.Uint16(minutiaeRecord[2:4]) >> 14
-			minutiaeData["Y coordinate"] = binary.BigEndian.Uint16(minutiaeRecord[2:4]) & 16383
-			minutiaeData["Angle"] = uint8(minutiaeRecord[4])
-			minutiaeData["Quality"] = uint8(minutiaeRecord[5])
-
-			fingerViewRecords[fmt.Sprintf("Finger View %d", view)] = append(fingerViewRecords[fmt.Sprintf("Finger View %d", view)], minutiaeData)
+		viewRecord := ViewRecord{
+			FingerPosition: uint8(fmd[0]),
+			ViewNumber:     uint8(fmd[1]) >> 4,
+			ImpressionType: uint8(fmd[1]) & 15,
+			FingerQuality:  uint8(fmd[2]),
+			MinutiaeCount:  uint8(fmd[3]),
 		}
+		fmd = fmd[4:]
+		var minutiaes = []Minutiae{}
+		var i uint8
+		fmt.Println(len(fmd))
+		for i = 0; i < viewRecord.MinutiaeCount; i++ {
+			record := fmd[6*i : 6*(i+1)]
+			m := Minutiae{
+				MinutiaeType: binary.BigEndian.Uint16(record[0:2]) >> 14,
+				CoordinateX:  binary.BigEndian.Uint16(record[0:2]) & 16383,
+				Reserved:     binary.BigEndian.Uint16(record[2:4]) >> 14,
+				CoordinateY:  binary.BigEndian.Uint16(record[2:4]) & 16383,
+				Angle:        uint8(record[4]),
+				Quality:      uint8(record[5]),
+			}
+			minutiaes = append(minutiaes, m)
+		}
+		viewRecord.Minutiaes = minutiaes
+		viewRecords = append(viewRecords, viewRecord)
 	}
-
-	return fingerViewRecords, nil
+	return &viewRecords, nil
 }
