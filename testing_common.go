@@ -1,4 +1,4 @@
-package ansi378
+package ansi378decoder
 
 import "encoding/base64"
 

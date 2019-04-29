@@ -1,10 +1,8 @@
 package ansi378decoder
 
 import (
-	"encoding/base64"
-	"log"
+	"github.com/stretchr/testify/assert"
 	"testing"
-  "github.com/stretchr/testify/assert"
 )
 
 var viewRecordsTests = []struct {

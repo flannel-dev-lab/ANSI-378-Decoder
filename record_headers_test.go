@@ -1,8 +1,8 @@
 package ansi378decoder
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 var recordHeaderTests = []struct {
