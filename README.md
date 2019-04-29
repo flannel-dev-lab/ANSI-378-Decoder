@@ -4,7 +4,7 @@
 
 Breaks down a ANSI INCITS 378-2004 Finger Minutiae Format
 
-## Method Information
+##  Information
 
 Supports go versions > 1.12.1. To install add this line to your `go.mod` file 
 
@@ -14,7 +14,6 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
     ```
     GetFMDRecordHeaders(fmdByteArray []byte) (recordHeaders map[string]interface{}, err error)
     ```
-    Takes in a `fmdByteArray` which is an array of bytes and returns the `recordHeader`
     
 - **Get View Data**
     ```

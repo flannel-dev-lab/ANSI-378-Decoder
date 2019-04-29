@@ -1,4 +1,4 @@
-package ANSI378Decoder
+package ansi378
 
 import (
 	"encoding/binary"

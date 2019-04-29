@@ -1,4 +1,4 @@
-package ANSI378Decoder
+package ansi378
 
 import (
 	"encoding/base64"
@@ -17,10 +17,9 @@ func TestGetViewRecords_TestRecordLength(t *testing.T) {
 
 	recordHeaders, err := GetFMDRecordHeaders(fmdByteArray)
 
-
 	viewData, err := GetViewRecords(fmdByteArray[26:], recordHeaders["Views"].(uint8))
 
-	if len(viewData["Finger View 1"]) < 46 || len(viewData["Finger View 1"]) > 46{
+	if len(viewData["Finger View 1"]) < 46 || len(viewData["Finger View 1"]) > 46 {
 		t.Errorf("Got more or less records than expected")
 	}
 }
