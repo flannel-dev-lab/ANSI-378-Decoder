@@ -1,9 +1,10 @@
-package ansi378
+package ansi378decoder
 
 import (
+	"encoding/base64"
+	"log"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
+  "github.com/stretchr/testify/assert"
 )
 
 var viewRecordsTests = []struct {
@@ -31,3 +32,4 @@ func TestViewRecords(t *testing.T) {
 		assert.EqualValues(test.expectedErr, err)
 	}
 }
+

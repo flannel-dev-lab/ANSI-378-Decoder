@@ -1,8 +1,7 @@
-package ansi378
+package ansi378decoder
 
 import (
 	"testing"
-
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,6 +16,7 @@ var recordHeaderTests = []struct {
 }
 
 func TestRecordHeaders(t *testing.T) {
+
 	assert := assert.New(t)
 	for _, test := range recordHeaderTests {
 		res, err := RecordHeaders(test.fmd)
