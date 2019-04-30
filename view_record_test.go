@@ -30,4 +30,3 @@ func TestViewRecords(t *testing.T) {
 		assert.EqualValues(test.expectedErr, err)
 	}
 }
-
