@@ -8,12 +8,12 @@ import (
 
 var recordHeaderTests = []struct {
 	fmd            []byte
-	expectedResult *RecordHeader
+	expectedResult RecordHeader
 	expectedErr    error
 }{
-	{invalidShortFMD, nil, ErrInvalidFMD},
-	{valid2ByteFMD, &validHeader, nil},
-	{valid6ByteFMD, &validHeader, nil},
+	{invalidShortFMD, RecordHeader{}, ErrInvalidFMD},
+	{valid2ByteFMD, validHeader, nil},
+	{valid6ByteFMD, validHeader, nil},
 }
 
 func TestRecordHeaders(t *testing.T) {

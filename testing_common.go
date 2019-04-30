@@ -30,15 +30,15 @@ var (
 		Views:               1,
 	}
 
-	valid2ByteViewRecords = &[]ViewRecord{
-		ViewRecord{
+	valid2ByteViewRecords = []ViewRecord{
+		{
 			FingerPosition: 0,
 			ViewNumber:     0,
 			ImpressionType: 0,
 			FingerQuality:  86,
 			MinutiaeCount:  45,
 			Minutiaes: []Minutiae{
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  80,
 					CoordinateY:  291,
@@ -46,7 +46,7 @@ var (
 					Angle:        120,
 					Quality:      100,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  127,
 					CoordinateY:  344,
@@ -54,7 +54,7 @@ var (
 					Angle:        118,
 					Quality:      97,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  85,
 					CoordinateY:  322,
@@ -62,7 +62,7 @@ var (
 					Angle:        118,
 					Quality:      96,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  74,
 					CoordinateY:  199,
@@ -70,7 +70,7 @@ var (
 					Angle:        113,
 					Quality:      96,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  146,
 					CoordinateY:  301,
@@ -78,7 +78,7 @@ var (
 					Angle:        26,
 					Quality:      95,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  252,
 					CoordinateY:  222,
@@ -86,7 +86,7 @@ var (
 					Angle:        77,
 					Quality:      92,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  118,
 					CoordinateY:  317,
@@ -94,7 +94,7 @@ var (
 					Angle:        29,
 					Quality:      92,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  75,
 					CoordinateY:  333,
@@ -102,7 +102,7 @@ var (
 					Angle:        28,
 					Quality:      92,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  96,
 					CoordinateY:  216,
@@ -110,7 +110,7 @@ var (
 					Angle:        23,
 					Quality:      90,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  237,
 					CoordinateY:  216,
@@ -118,7 +118,7 @@ var (
 					Angle:        172,
 					Quality:      90,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  176,
 					CoordinateY:  270,
@@ -126,7 +126,7 @@ var (
 					Angle:        10,
 					Quality:      90,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  111,
 					CoordinateY:  144,
@@ -134,7 +134,7 @@ var (
 					Angle:        110,
 					Quality:      89,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  175,
 					CoordinateY:  184,
@@ -142,7 +142,7 @@ var (
 					Angle:        106,
 					Quality:      89,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  261,
 					CoordinateY:  301,
@@ -150,7 +150,7 @@ var (
 					Angle:        158,
 					Quality:      89,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  204,
 					CoordinateY:  262,
@@ -158,7 +158,7 @@ var (
 					Angle:        101,
 					Quality:      88,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  248,
 					CoordinateY:  344,
@@ -166,7 +166,7 @@ var (
 					Angle:        152,
 					Quality:      88,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  205,
 					CoordinateY:  155,
@@ -174,7 +174,7 @@ var (
 					Angle:        4,
 					Quality:      87,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  193,
 					CoordinateY:  73,
@@ -182,7 +182,7 @@ var (
 					Angle:        101,
 					Quality:      87,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  214,
 					CoordinateY:  114,
@@ -190,7 +190,7 @@ var (
 					Angle:        5,
 					Quality:      85,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  116,
 					CoordinateY:  275,
@@ -198,7 +198,7 @@ var (
 					Angle:        121,
 					Quality:      84,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  209,
 					CoordinateY:  301,
@@ -206,7 +206,7 @@ var (
 					Angle:        160,
 					Quality:      84,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  249,
 					CoordinateY:  66,
@@ -214,7 +214,7 @@ var (
 					Angle:        96,
 					Quality:      83,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  54,
 					CoordinateY:  149,
@@ -222,7 +222,7 @@ var (
 					Angle:        105,
 					Quality:      83,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  192,
 					CoordinateY:  289,
@@ -230,7 +230,7 @@ var (
 					Angle:        4,
 					Quality:      83,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  151,
 					CoordinateY:  326,
@@ -238,7 +238,7 @@ var (
 					Angle:        23,
 					Quality:      83,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  122,
 					CoordinateY:  162,
@@ -246,7 +246,7 @@ var (
 					Angle:        16,
 					Quality:      82,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  163,
 					CoordinateY:  79,
@@ -254,7 +254,7 @@ var (
 					Angle:        11,
 					Quality:      80,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  173,
 					CoordinateY:  343,
@@ -262,7 +262,7 @@ var (
 					Angle:        5,
 					Quality:      78,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  164,
 					CoordinateY:  133,
@@ -270,7 +270,7 @@ var (
 					Angle:        15,
 					Quality:      78,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  157,
 					CoordinateY:  340,
@@ -278,7 +278,7 @@ var (
 					Angle:        23,
 					Quality:      77,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  83,
 					CoordinateY:  129,
@@ -286,7 +286,7 @@ var (
 					Angle:        20,
 					Quality:      75,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  294,
 					CoordinateY:  151,
@@ -294,7 +294,7 @@ var (
 					Angle:        77,
 					Quality:      74,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  55,
 					CoordinateY:  116,
@@ -302,7 +302,7 @@ var (
 					Angle:        108,
 					Quality:      70,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  198,
 					CoordinateY:  245,
@@ -310,7 +310,7 @@ var (
 					Angle:        2,
 					Quality:      68,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  203,
 					CoordinateY:  353,
@@ -318,7 +318,7 @@ var (
 					Angle:        160,
 					Quality:      65,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  29,
 					CoordinateY:  160,
@@ -326,7 +326,7 @@ var (
 					Angle:        15,
 					Quality:      62,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  294,
 					CoordinateY:  143,
@@ -334,7 +334,7 @@ var (
 					Angle:        167,
 					Quality:      61,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  221,
 					CoordinateY:  28,
@@ -342,7 +342,7 @@ var (
 					Angle:        8,
 					Quality:      58,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  26,
 					CoordinateY:  248,
@@ -350,7 +350,7 @@ var (
 					Angle:        116,
 					Quality:      58,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 1,
 					CoordinateX:  26,
 					CoordinateY:  178,
@@ -358,7 +358,7 @@ var (
 					Angle:        104,
 					Quality:      55,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 2,
 					CoordinateX:  276,
 					CoordinateY:  55,
@@ -366,7 +366,7 @@ var (
 					Angle:        179,
 					Quality:      54,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 0,
 					CoordinateX:  180,
 					CoordinateY:  362,
@@ -374,7 +374,7 @@ var (
 					Angle:        8,
 					Quality:      49,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 0,
 					CoordinateX:  231,
 					CoordinateY:  365,
@@ -382,7 +382,7 @@ var (
 					Angle:        55,
 					Quality:      49,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 0,
 					CoordinateX:  229,
 					CoordinateY:  349,
@@ -390,7 +390,7 @@ var (
 					Angle:        65,
 					Quality:      43,
 				},
-				Minutiae{
+				{
 					MinutiaeType: 0,
 					CoordinateX:  203,
 					CoordinateY:  365,

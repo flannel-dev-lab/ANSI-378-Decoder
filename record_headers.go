@@ -26,9 +26,9 @@ const (
 )
 
 // RecordHeaders returns the record headers of a given FMD
-func RecordHeaders(fmd []byte) (*RecordHeader, error) {
+func RecordHeaders(fmd []byte) (RecordHeader, error) {
 	if len(fmd) <= minimumFMDHeaderLength {
-		return nil, ErrInvalidFMD
+		return RecordHeader{}, ErrInvalidFMD
 	}
 	header := RecordHeader{
 		FormatIdentifier: string(fmd[0:4])[0:3], // Last byte is null terminator
@@ -60,5 +60,5 @@ func RecordHeaders(fmd []byte) (*RecordHeader, error) {
 		header.Views = uint8(fmd[28])
 		header.Reserved = fmd[29]
 	}
-	return &header, nil
+	return header, nil
 }
