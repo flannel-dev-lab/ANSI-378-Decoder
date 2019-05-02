@@ -25,7 +25,7 @@ const (
 	minimumFMDHeaderLength = 30
 )
 
-// RecordHeaders returns the record headers of a given FMD
+// RecordHeaders returns the record header of a given FMD
 func RecordHeaders(fmd []byte) (*RecordHeader, error) {
 	if len(fmd) <= minimumFMDHeaderLength {
 		return nil, ErrInvalidFMD

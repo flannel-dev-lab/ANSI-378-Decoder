@@ -8,7 +8,7 @@ import (
 
 var viewRecordsTests = []struct {
 	fmd            []byte
-	expectedResult *[]ViewRecord
+	expectedResult []ViewRecord
 	expectedErr    error
 }{
 	{invalidShortFMD, nil, ErrInvalidFMD},
@@ -19,15 +19,16 @@ func TestViewRecords(t *testing.T) {
 	assert := assert.New(t)
 	for _, test := range viewRecordsTests {
 		recordHeaders, err := RecordHeaders(test.fmd)
-		if err != nil {
-			assert.EqualValues(test.expectedErr, err)
+		assert.EqualValues(test.expectedErr, err)
+		// if we're doing a test of shorter-than-valid fmds
+		var res []ViewRecord
+		if len(test.fmd) < 27 {
+			// don't cut the slice
+			res, err = ViewRecords(test.fmd, recordHeaders.Views)
+		} else { // chop the header off
+			res, err = ViewRecords(test.fmd[26:], recordHeaders.Views)
 		}
-		if recordHeaders != nil {
-			res, err := ViewRecords(test.fmd[26:], recordHeaders.Views)
-			if err == nil {
-				assert.EqualValues(test.expectedResult, res)
-			}
-		}
+		assert.EqualValues(test.expectedResult, res)
 		assert.EqualValues(test.expectedErr, err)
 	}
 }

@@ -39,12 +39,8 @@ func ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error) {
 	if len(fmd) < minimumFMDViewRecordLength {
 		return nil, ErrInvalidFMD
 	}
-
-	var view uint8
 	var viewRecords []ViewRecord
-
-	for view = 1; view <= views; view++ {
-
+	for view := 1; view <= int(views); view++ {
 		viewRecord := ViewRecord{
 			FingerPosition: uint8(fmd[0]),
 			ViewNumber:     uint8(fmd[1]) >> 4,
@@ -52,17 +48,11 @@ func ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error) {
 			FingerQuality:  uint8(fmd[2]),
 			MinutiaeCount:  uint8(fmd[3]),
 		}
-
 		fmd = fmd[4:]
-		var minutiaeCount uint
-
 		var minutiaes []Minutiae
-
-		for minutiaeCount = 0; minutiaeCount < uint(viewRecord.MinutiaeCount); minutiaeCount++ {
+		for minutiaeCount := 0; minutiaeCount < int(viewRecord.MinutiaeCount); minutiaeCount++ {
 			record := fmd[6*minutiaeCount : 6*(minutiaeCount+1)]
-
 			minutiae := Minutiae{
-
 				MinutiaeType: binary.BigEndian.Uint16(record[0:2]) >> 14,
 				CoordinateX:  binary.BigEndian.Uint16(record[0:2]) & 16383,
 				Reserved:     binary.BigEndian.Uint16(record[2:4]) >> 14,
