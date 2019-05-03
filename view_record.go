@@ -36,7 +36,7 @@ const (
 
 // ViewRecords returns a slice of ViewRecords given an FMD
 func ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error) {
-	if len(fmd) < minimumFMDViewRecordLength || len(fmd[4:]) - 2 % 6 != 0 {
+	if len(fmd) < minimumFMDViewRecordLength || (len(fmd[4:]) - 2) % 6 != 0 {
 		return nil, ErrInvalidFMD
 	}
 
