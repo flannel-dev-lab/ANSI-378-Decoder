@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/flannel-dev-lab/ANSI-378-Decoder)](https://goreportcard.com/report/github.com/flannel-dev-lab/ANSI-378-Decoder)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e06105c32cf6440783c256085b708d46)](https://www.codacy.com/manual/vmanikes/ANSI-378-Decoder?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=flannel-dev-lab/ANSI-378-Decoder&amp;utm_campaign=Badge_Grade)
 # ANSI-378 Decoder
 
 Breaks down a ANSI INCITS 378-2004 Finger Minutiae Format
@@ -9,14 +10,14 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
 
 `github.com/yombu360/ANSI-378-Decoder`
 
-- **Get Record headers**
-    ```
+-  **Get Record headers**
+    ```go
     RecordHeaders(fmd []byte) (*RecordHeader, error)
     ```
     Takes in a `fmd` byte array which is an array of bytes and returns the address of `RecordHeader`
     
     The following headers are returned
-    ```
+    ```go
     type RecordHeader struct {
     	FormatIdentifier    string
     	VersionNumber       string
@@ -34,8 +35,8 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
     }
     ```
     
-- **Get View Data**
-    ```
+-   **Get View Data**
+    ```go
     ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error)
     ```
     Takes in a `fmd` byte array which is an array of bytes and `views` (Can be obtained from record header) and returns an 
