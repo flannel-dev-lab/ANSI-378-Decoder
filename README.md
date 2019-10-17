@@ -10,7 +10,7 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
 
 `github.com/yombu360/ANSI-378-Decoder`
 
--  **Get Record headers**
+-   **Get Record headers**
     ```go
     RecordHeaders(fmd []byte) (*RecordHeader, error)
     ```
@@ -34,7 +34,8 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
     	Reserved            byte
     }
     ```
-    
+
+
 -   **Get View Data**
     ```go
     ViewRecords(fmd []byte, views uint8) ([]ViewRecord, error)
@@ -42,4 +43,3 @@ Supports go versions > 1.12.1. To install add this line to your `go.mod` file
     Takes in a `fmd` byte array which is an array of bytes and `views` (Can be obtained from record header) and returns an 
     array of `ViewRecords`
     
-
