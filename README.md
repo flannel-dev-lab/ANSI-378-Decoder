@@ -8,7 +8,7 @@ Breaks down a ANSI INCITS 378-2004 Finger Minutiae Format
 
 Supports go versions > 1.12.1. To install add this line to your `go.mod` file 
 
-`github.com/yombu360/ANSI-378-Decoder`
+`github.com/flannel-dev-lab/ANSI-378-Decoder`
 
 -   **Get Record headers**
     ```go
